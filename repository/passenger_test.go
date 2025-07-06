@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -18,47 +17,51 @@ func TestInsertData(t *testing.T) {
 
 	passenger_id := uuid.New()
 
-	birthDate := time.Date(1998, time.January, 15, 0, 0, 0, 0, time.UTC)
+	birthDate := time.Date(1970, time.August, 17, 0, 0, 0, 0, time.UTC)
 
 	passenger := entity.Passenger{
-		PassengerID: passenger_id,
-		FirstName: "Alex",
-		LastName: "Alex",
+		ID: passenger_id,
+		FirstName: "Rutwik",
+		LastName: "Sabre",
 		BirthOfDate: &birthDate,
 		Gender: "MALE",
 		PassengerType: "ADT",
 		EmailAddresses: []entity.PassengerEmail {
 			entity.PassengerEmail{
-				EmailID: uuid.New(),
+				ID: uuid.New(),
 				PassengerID: passenger_id,
-				EmailAddress: "alexalex@gmail.com",
+				EmailAddress: "johnsabre@domain.com",
 			},
 		},
 		PhoneNumbers: []entity.PassengerPhone {
 			entity.PassengerPhone{
-				PhoneID: uuid.New(),
+				ID: uuid.New(),
 				PassengerID: passenger_id,
 				PhoneNumber: "08123456789",
 			},
 		},
 		Document: entity.PassengerDocument{
-			DocumentID: uuid.New(),
+			ID: uuid.New(),
 			PassengerID: passenger_id,
 			DocumentType: "P",
 			IssuingCountry: "ID",
 			CountryOfBirth: "ID",
 			Nationality: "ID",
-		},	
+		},
+			
 	}
 
-	res, err := repository.Insert(ctx, &passenger)
+	err := repository.InsertPassengerData(ctx, &passenger)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(res)
 }
 
 func TestGetData(t *testing.T) {
 	ctx := context.Background()
-	repository.FindById(ctx, "8fe24407-1df6-4b99-96c9-4dee6b72fdfb")
+	repository.FindPassengerDataById(ctx, "8fe24407-1df6-4b99-96c9-4dee6b72fdfb")
+}
+
+func TestPassengerData(t *testing.T) {
+	repository.FindPassengerSegmentByPassengerIdAndSegmenRef(context.Background(), "8fe24407-1df6-4b99-96c9-4dee6b72fdfb", "3937094243023851424")
 }

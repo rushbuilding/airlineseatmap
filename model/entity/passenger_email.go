@@ -3,11 +3,11 @@ package entity
 import "github.com/google/uuid"
 
 type PassengerEmail struct {
-	EmailID 		uuid.UUID 		`gorm:"column:email_id;primarykey"`
-	PassengerID 	uuid.UUID 		`gorm:"column:passenger_id"`
-	EmailAddress 	string 			`gorm:"column:email_address"`
+	ID           uuid.UUID `gorm:"column:email_id;primaryKey" json:"id"`
+	PassengerID  uuid.UUID `gorm:"column:passenger_id" json:"passenger_id"`
+	EmailAddress string    `gorm:"column:email_address" json:"email_address"`
 }
 
-func (pe *PassengerEmail) TableName() string {
+func (a *PassengerEmail) TableName() string {
 	return "passenger_email"
 }

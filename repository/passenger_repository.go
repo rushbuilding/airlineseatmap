@@ -7,6 +7,8 @@ import (
 )
 
 type PassengerRepository interface {
-	Insert(ctx context.Context, data *entity.Passenger)  (int64, error)
-	FindById(ctx context.Context, id string) entity.Passenger
+	InsertPassengerData(ctx context.Context, data *entity.Passenger) error
+	FindPassengerDataById(ctx context.Context, id string) (*entity.Passenger, error)
+
+	FindPassengerSegmentByPassengerIdAndSegmenRef(ctx context.Context, pid string, ref string) (*entity.SegmentPassenger, error)
 } 

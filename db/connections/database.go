@@ -14,6 +14,8 @@ func GetConnection() *gorm.DB {
 	connect := mysql.Open("spring:123456abc@tcp(localhost:3306)/springdatabase?charset=utf8mb4&parseTime=True&loc=UTC")
 	db, err := gorm.Open(connect, &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
+		DisableAutomaticPing: true, // optional, improves speed
+		PrepareStmt:          false, // optional, enables caching prepared statements
 	})
 	if err != nil {
 		log.Panic(err)

@@ -16,4 +16,5 @@ This app hasn't finish so app cannot be run but to run it, it can use
 `go run main.go`
 
 ERD for seating database
-![image](https://github.com/user-attachments/assets/e72a674f-dabf-4a0a-8de6-f59b2334d4ae)
+![erd](https://github.com/user-attachments/assets/5ddebaf8-1ec6-499f-a237-9a27f5c58a30)
+

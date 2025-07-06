@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/rushbuilding/airlineseatmap/model/dto"
 	"github.com/rushbuilding/airlineseatmap/repository"
@@ -10,14 +11,21 @@ import (
 
 type CabinServiceImpl struct {
 	AircraftRepository repository.AircraftManagementRepository
+	SegmentRepository repository.SegmentManagementRepository
 }
 
-func NewCabinService(AircraftRepository repository.AircraftManagementRepository) CabinService {
-	return &CabinServiceImpl{AircraftRepository:AircraftRepository}
+func NewCabinService(aircraftRepository repository.AircraftManagementRepository,segmentRepository repository.SegmentManagementRepository) CabinService {
+	return &CabinServiceImpl{AircraftRepository:aircraftRepository, SegmentRepository: segmentRepository}
 }
 
-func (r *CabinServiceImpl) GetSeatingMapAndPriceByCabinId(ctx context.Context, aircraftId string, serviceClass string, currency string) (dto.SeatMap, error) {
-	cabin, err := r.AircraftRepository.GetCabinByAircraftIDAndServiceClass(ctx, aircraftId, serviceClass)
+func (r *CabinServiceImpl) GetSeatingMapAndPriceByCabinId(ctx context.Context, segmentRef string, serviceClass string, currency string) (dto.SeatMap, error) {
+	segment, _ := r.SegmentRepository.GetSegmentBySegmentRef(ctx, segmentRef)
+	aircraft, err := r.AircraftRepository.GetAircraftByID(ctx, segment.AircraftID.String())
+	if err != nil {
+		panic(err)
+	}
+
+	cabin, err := r.AircraftRepository.GetCabinByAircraftIDAndServiceClass(ctx, segment.AircraftID.String(), serviceClass)
 	if err != nil {
 		panic(err)
 	}
@@ -144,7 +152,7 @@ func (r *CabinServiceImpl) GetSeatingMapAndPriceByCabinId(ctx context.Context, a
 
 	passengerSeatMap := dto.SeatMap{
 		RowsDisabledCauses: disableCauses,
-		Aircraft: "734",
+		Aircraft:  strconv.Itoa(int(aircraft.RegistrationNumber)),
 		Cabins: []dto.Cabin{cabinDeck},
 	}
 

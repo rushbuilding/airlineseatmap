@@ -78,3 +78,13 @@ func (r *SegmentManagementRepositoryImpl) CreatePassengerSegment(ctx context.Con
 	}
 	return r.db.Create(data).Error
 }
+
+func (r *SegmentManagementRepositoryImpl) GetPassengerSegmentById(ctx context.Context, id string) (*entity.SegmentPassenger, error) {
+	var segmentPassenger entity.SegmentPassenger
+	
+	err := r.db.Where("segment_passenger_id = ?", id).First(&segmentPassenger).Error
+	if err != nil {
+		return nil, err
+	}
+	return &segmentPassenger, nil
+}

@@ -3,6 +3,7 @@ package dto
 type PassengerSeatMap struct {
 	SeatSelectionEnabledForPax bool
 	SeatMap SeatMap
+	Passenger FlightPassenger
 }
 
 type SeatMap struct {

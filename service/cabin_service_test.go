@@ -10,9 +10,13 @@ import (
 	"github.com/rushbuilding/airlineseatmap/repository"
 )
 
-var cabinService = NewCabinService(repository.NewAircraftManagementRepositoryImpl(connections.GetConnection()))
+var con = connections.GetConnection()
+
+var cabinService = NewCabinService(
+	repository.NewAircraftManagementRepositoryImpl(con),
+	repository.NewSegmentManagementRepository(con))
 func TestXxx(t *testing.T) {
-	res, _ := cabinService.GetSeatingMapAndPriceByCabinId(context.Background(), "fd7f5c51-0bc2-417c-a228-9b0ffd97e43c", "ECONOMY", "MYR")
+	res, _ := cabinService.GetSeatingMapAndPriceByCabinId(context.Background(), "3937094243023851424", "ECONOMY", "MYR")
 	jsonData, _ := json.MarshalIndent(res, "", "  ")
 	fmt.Println(string(jsonData))	
 }

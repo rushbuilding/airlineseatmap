@@ -15,5 +15,6 @@ type SegmentManagementRepository interface {
 	GetSegmentOfferingById(ctx context.Context, id string) (*entity.SegmentOffering, error)
 	GetSegmentOfferingBySegmentRefAndServiceClass(ctx context.Context, ref string, serviceClass string) (*entity.SegmentOffering, error)
 	GetSegmentBySegmentRef(ctx context.Context, ref string) (*entity.Segment, error)
+	GetPassengerSegmentById(ctx context.Context, id string) (*entity.SegmentPassenger, error)
 	
 }

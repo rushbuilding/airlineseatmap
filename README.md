@@ -11,6 +11,9 @@ Create table in database
 
 -database is database created from docker
 
+Change database url on https://github.com/rushbuilding/airlineseatmap/blob/main/db/connections/database.go
+Use database created
+
 This app hasn't finish so app cannot be run but to run it, it can use
 
 `go run main.go`
